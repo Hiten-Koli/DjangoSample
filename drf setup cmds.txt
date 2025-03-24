@@ -1,0 +1,9 @@
+python -m venv env // or pip install pipenv (global) manages dependencies as well
+.\env\Scripts\activate  
+pip install django  
+pip freeze
+django-admin startproject django_rest_main .
+python manage.py runserver
+pip install djangorestframework
+//Add 'rest framework' in main's settings.py installed_apps
+python manage.py startapp students // Add this as well  in installed_apps
