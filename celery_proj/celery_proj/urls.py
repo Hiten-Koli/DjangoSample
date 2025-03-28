@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('myapp.urls')),
     path('api/', include('swagger_app.urls')),
+    path('file/',include('file_processor.urls') )
 ]

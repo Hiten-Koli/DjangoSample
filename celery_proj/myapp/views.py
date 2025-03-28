@@ -2,12 +2,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from django.http import HttpResponse
 from .tasks import add, send_welcome_email
-# Create your views here.
+import logging, traceback
 
+logger = logging.getLogger('django')
 
 def home(request):
     task = add.delay(5, 10)
     print(f'{task}')
+    logger.info("testing Logger!!!")
     return HttpResponse({f'"task_id": {task}, "status": "Task submitted"'})
 
 @api_view(['POST'])

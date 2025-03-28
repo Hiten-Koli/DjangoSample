@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'myapp',
     'swagger_app',
+    'file_processor',
+    'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -129,7 +132,41 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Celery Configuration Options
 CELERY_BROKER_URL = "amqp://guest:guest@localhost:5672/"
 CELERY_TIMEZONE = "Asia/Kolkata"
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'django-db'  #  Store task results (Optional)
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+import os
+
+LOGGING = {
+    "version": 1,
+    "loggers": {
+        "django": {
+            "handlers": ["file","file2"],
+            "level": 'DEBUG',
+        },
+    },
+    "handlers":{
+        "file": {
+            "level": 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './logs/debug2.log'
+        },
+        "file2": {
+            "level": 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './logs/infolog.log',
+            'formatter': 'custform'
+        }
+    },
+    "formatters": {
+        'custform': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}', #{asctime} {module} {process:d} {thread:d} {message}
+            'style': '{'
+        }
+    }
 }
